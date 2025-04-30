@@ -71,8 +71,6 @@ class ScopedJSObjectPushPopHelper {
 };
 
 #if defined(OS_ANDROID)
-bool JSBUtilsRegisterJNI(JNIEnv* env);
-bool JSBUtilsMapRegisterJNI(JNIEnv* env);
 
 void PushByteArrayToJavaArray(piper::Runtime* rt,
                               const piper::ArrayBuffer& array_buffer,
