@@ -19,6 +19,7 @@ buildscript {
         value = project.properties["abiList"]
         abiList = value? value.toString().split(",") : ["arm64-v8a"]
         enable_coverage_bool = (enable_coverage == 'true')
+        pythonPath = file('../../../.venv/bin/python3').absolutePath
     }
     repositories {
         google()
@@ -97,7 +98,7 @@ ext.getFlavorNamesAndBuildTypes = { Project project ->
 ext.writeGnArgs = { String gnArgs ->
     exec {
         workingDir "../../"
-        commandLine "python3", "tools/android_tools/write_gn_args.py", "--gn-args", gnArgs.replaceAll('"', '#')
+        commandLine pythonPath, "tools/android_tools/write_gn_args.py", "--gn-args", gnArgs.replaceAll('"', '#')
     }
 }
 
@@ -136,7 +137,7 @@ task generateAllGnCmakeTargets {
     }
     exec {
         workingDir "../../"
-        commandLine "python3", "tools/android_tools/generate_cmake_scripts_by_gn.py"
+        commandLine pythonPath, "tools/android_tools/generate_cmake_scripts_by_gn.py"
         println commandLine
     }
 }
@@ -157,7 +158,7 @@ task clean(type: Delete) {
     doLast {
         exec {
             workingDir "../../"
-            commandLine "python3", "tools/android_tools/generate_cmake_scripts_by_gn.py", "--clean"
+            commandLine pythonPath, "tools/android_tools/generate_cmake_scripts_by_gn.py", "--clean"
             println commandLine
         }
     }

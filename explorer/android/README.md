@@ -46,12 +46,22 @@ On RHEL or CentOS:
 sudo yum install openjdk-11-jdk 
 ```
 
+#### Windows
+可通过powershell下载安装，也可直接从官网下载安装包安装。
+
+```
+winget search openjdk
+```
+```
+winget install -e --id ojdkbuild.openjdk.11.jdk
+```
 
 #### Update JAVA_HOME
 
 Confirm your JDK installation directory. If you follow the above steps, the JDK path is likely to be 
 - `/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home` on MacOS
-- `/usr/lib/jvm/java-11-openjdk-amd64` on Linux.  
+- `/usr/lib/jvm/java-11-openjdk-amd64` on Linux
+- `C:\Program Files\Zulu\zulu-11.jdk\Contents\Home` on Windows.
 
 Add the following statement to your environment configuration file (it may be ~/.zshrc or ~/.bash_profile or ~/.bashrc, depending on your terminal environment):
 
@@ -66,6 +76,11 @@ export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 ```
 
+- Windows
+```
+set JAVA_HOME=C:\Program Files\Zulu\zulu-11.jdk\Contents\Home
+set PATH=%JAVA_HOME%\bin;%PATH%
+
 ### Android development environment
 
 Configuring the Android development environment required by Lynx includes the following step:
@@ -78,23 +93,24 @@ If you have installed the Android SDK before, please set ANDROID_HOME to the ins
 
 If you have NOT installed the Android SDK before, you can set ANDROID_HOME to the path where you want the Android SDK to be installed. We have tools to help you install the Android SDK to ANDROID_HOME.
 
+- MacOS or Linux
+
 ```
 export ANDROID_HOME=<path-to-android-sdk>
+```
+
+- Windows
+
+```Powershell
+[Environment]::SetEnvironmentVariable('ANDROID_HOME', '$path-to-android-sdk', 'Machine')
 ```
 
 
 ### Python library
 
 #### MacOS
-The yaml dependency needs to be installed to execute some auto-generation logic.
 
-```
-# use the virtual environment to manage python environment
-python3 -m venv venv
-source venv/bin/activate
-# install PyYAML package
-pip3 install pyyaml
-```
+
 #### Linux
 
 We recommend using pyenv to manage python environment on Linux.
@@ -105,9 +121,11 @@ Install python with version higher or equal to 3.9 using pyenv:
 pyenv install 3.9 # or higher
 pyenv global 3.9 # or higher
 ```
-Install pyyaml after python is setup:
-```
-pip3 install pyyaml
+
+#### Windows
+
+```PowerShell
+winget install -e --id Python.Python.3.9
 ```
 
 ## Get the code
@@ -124,10 +142,20 @@ git clone https://github.com/lynx-family/lynx.git src/lynx
 
 After getting the project repository, execute the following commands in the root directory of the project to get the project dependent files
 
+- MacOS or Linux
+
 ```
 cd src/lynx
 source tools/envsetup.sh
 tools/hab sync .
+```
+
+- Windows
+
+```PowerShell
+cd src\lynx
+tools\envsetup.ps1
+tools\hab.ps1 sync .
 ```
 
 ### Install the Android components

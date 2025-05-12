@@ -226,17 +226,7 @@ task configGnCompileParas {
     writeGnArgs(gnBuildArgs_map.toJSONString())
 }
 
-task copyResources() {
-    doLast {
-        exec {
-            workingDir '../../../'
-            commandLine 'python3', './devtool/lynx_devtool/resources/copy_resources.py'
-        }
-    }
-}
-
 preBuild.dependsOn extractJNIFiles
-preBuild.dependsOn copyResources
 tasks.whenTaskAdded { task ->
     if (task.name.startsWith('externalNativeBuild')) {
         task.dependsOn extractJNIFiles
